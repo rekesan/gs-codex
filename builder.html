@@ -2,7 +2,7 @@
 <title>RAN GS Builder</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Saira+Semi+Condensed:wght@500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Saira+Semi+Condensed:wght@500;700&display=optional">
 <style>
 :root{
   --bg:#f3f5f6; --panel:#ffffff; --ink:#18232a; --muted:#5b6b73; --line:#dce3e6; --soft:#e9eef0;
@@ -23,6 +23,7 @@
   --accent:#4fbab3; --accent-ink:#0b1416; --accent-soft:#17383a; --warn:#f0954d; --warn-soft:#3a2617; --good:#5cc26c;
   --g0:#9aa7ad; --g1:#5cc26c; --g2:#6ea8f0; --g3:#b38cf0; --g4:#f0954d; --g5:#f0706a;}
 *{box-sizing:border-box}
+html{scrollbar-gutter:stable}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:14px;line-height:1.45;padding-inline:16px;padding-block:20px 48px}
 .wrap{max-width:1320px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
 header{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 24px}
@@ -53,15 +54,15 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 .stat .tot{font-family:var(--mono);font-size:12px;color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
 .stat input{padding:5px 7px}
 .slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:8px}
-.slot{all:unset;box-sizing:border-box;cursor:pointer;border:1px dashed var(--line);border-radius:8px;padding:9px 11px;display:flex;flex-direction:column;gap:3px;min-height:64px;background:var(--panel)}
+.slot{all:unset;box-sizing:border-box;cursor:pointer;border:1px dashed var(--line);border-radius:8px;padding:9px 11px;display:flex;flex-direction:column;gap:3px;height:126px;overflow:hidden;background:var(--panel)}
 .slot.filled{border-style:solid}
 .slot.bad{border-color:var(--warn)}
 .slot .sl{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600;display:flex;justify-content:space-between;gap:6px}
-.slot .it{font-weight:500;font-size:13.5px;display:flex;align-items:center}
+.slot .it{font-weight:500;font-size:13.5px;display:flex;align-items:center;flex:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ic{display:inline-block;flex:none;width:28px;height:28px;vertical-align:middle;margin-right:8px;border-radius:4px;background:url(icons.webp) no-repeat;background-size:1792px auto;box-shadow:0 0 0 1px var(--line,rgba(127,127,127,.25))}.ic.none{background:var(--soft,rgba(127,127,127,.12))}
 
-.slot .ds{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
-.slot .wn{font-size:11.5px;color:var(--warn)}
+.slot .ds{font-family:var(--mono);font-size:11.5px;color:var(--muted);display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+.slot .wn{font-size:11.5px;color:var(--warn);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:none}
 .g{display:inline-block;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;border:1px solid currentColor;border-radius:4px;padding:0 4px;margin-right:5px;vertical-align:1px}
 .g0{color:var(--g0)}.g1{color:var(--g1)}.g2{color:var(--g2)}.g3{color:var(--g3)}.g4{color:var(--g4)}.g5{color:var(--g5)}
 dl.out{display:grid;grid-template-columns:1fr auto;gap:5px 12px;margin:0;font-variant-numeric:tabular-nums}
@@ -88,14 +89,14 @@ tr.bad td{background:var(--warn-soft)}
 .wn{color:var(--warn)}
 .ok{color:var(--good)}
 /* picker */
-dialog{border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--ink);padding:0;width:min(860px,calc(100vw - 32px));max-height:min(80vh,760px)}
+dialog{border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--ink);padding:0;width:min(860px,calc(100vw - 32px));height:min(80vh,760px);max-height:min(80vh,760px);overflow:hidden}
 dialog::backdrop{background:rgba(10,20,24,.45)}
-.pk{display:flex;flex-direction:column;max-height:min(80vh,760px)}
+.pk{display:flex;flex-direction:column;height:100%}
 .pkhead{padding:12px 14px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .pkhead h2{flex-basis:100%}
 .pkhead input[type=search]{flex:1 1 220px;width:auto}
 .pkhead label{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted)}
-.pklist{overflow:auto;padding:6px 8px}
+.pklist{overflow:auto;padding:6px 8px;flex:1 1 auto;min-height:0;scrollbar-gutter:stable}
 .pkitem{all:unset;box-sizing:border-box;display:grid;grid-template-columns:1fr auto;gap:2px 12px;width:100%;padding:7px 8px;border-radius:6px;cursor:pointer}
 .pkitem:hover,.pkitem:focus-visible{background:var(--soft)}
 .pkitem .m{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
@@ -105,8 +106,12 @@ dialog::backdrop{background:rgba(10,20,24,.45)}
 .tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
 [role="tabpanel"][hidden]{display:none!important}
 .other{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:2px}
+html:not(.ready) body>.wrap{visibility:hidden}
+html:not(.ready) body::after{content:"Loading data\2026";position:fixed;inset:0;display:grid;place-items:center;color:var(--muted);font-family:var(--body);font-size:14px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
+<script>addEventListener("load",()=>document.documentElement.classList.add("ready"))</script>
+<noscript><style>html:not(.ready) body>.wrap{visibility:visible}html:not(.ready) body::after{content:none}</style></noscript>
 
 <div class="wrap">
   <header>
@@ -115,7 +120,7 @@ dialog::backdrop{background:rgba(10,20,24,.45)}
       <p class="sub">Plan a character with the GS data: class constants, stat points, gear and skills. Numbers use the game's own formulas from the GS source; items with rolled stats use their typical roll.</p>
     </div>
     <div class="row" style="flex:0 0 auto;gap:6px">
-      <button class="btn" id="b-copy" type="button">Copy summary</button>
+      <button class="btn" id="b-copy" type="button" style="min-width:8.5em;white-space:nowrap">Copy summary</button>
       <button class="btn" id="b-reset" type="button">Reset build</button>
     </div>
   </header>
@@ -299,7 +304,7 @@ function fmtV(t,v){return (String(ADD[t]||"").includes("%")&&Math.abs(v)<1)?`+${
 let curSlot=null;
 function renderSlots(r){
   $("slots").innerHTML=SLOTDEF.map(([key,label,si])=>{const it=ITEM[S.gear[key]];const w=r.warn[key];
-    return `<button type="button" class="slot ${it?"filled":""} ${w?"bad":""}" data-slot="${key}"><span class="sl"><span>${label}</span>${it?`<span>Lv ${it[6]}</span>`:""}</span>${it?`<span class="it">${ic(it[16])}<span>${gchip(it[2])}${esc(it[1])}</span></span><span class="ds">${esc(itemLine(it))}</span>${w?`<span class="wn">${esc(w.join(", "))}</span>`:""}`:`<span class="ds">Empty</span>`}</button>`}).join("");
+    return `<button type="button" class="slot ${it?"filled":""} ${w?"bad":""}" data-slot="${key}" title="${it?esc(it[1]+" — "+itemLine(it)+(w?" — "+w.join(", "):"")):"Empty "+label}"><span class="sl"><span>${label}</span>${it?`<span>Lv ${it[6]}</span>`:""}</span>${it?`<span class="it">${ic(it[16])}<span>${gchip(it[2])}${esc(it[1])}</span></span><span class="ds">${esc(itemLine(it))}</span>${w?`<span class="wn">${esc(w.join(", "))}</span>`:""}`:`<span class="ds">Empty</span>`}</button>`}).join("");
   $("set-info").innerHTML=r.setLines.length?r.setLines.map(s=>`<span><b>${esc(s.name)}</b>: ${s.n} piece${s.n>1?"s":""} worn${s.act.length?` · active: ${s.act.map(b=>`${b[0]}pc ${esc(b[1])} ${b[2]}`).join(", ")}`:""}${S.sets?"":" (not applied)"}</span>`).join(""):"";
 }
 const gchip=g=>`<span class="g g${g}">${GR[g]}</span>`;
@@ -366,6 +371,7 @@ if(!Object.keys(S.gear).length&&S.alloc.every(v=>!v)){
   const b=statBudget();S.alloc[0]=Math.floor(b.avail*0.6);S.alloc[1]=b.avail-S.alloc[0];
 }
 render();
+document.documentElement.classList.add("ready");
 </script>
 
 </html>

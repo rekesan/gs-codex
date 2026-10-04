@@ -2,7 +2,7 @@
 <title>RAN GS</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Saira+Semi+Condensed:wght@500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Saira+Semi+Condensed:wght@500;700&display=optional">
 <style>
 :root{
   --bg:#f3f5f6; --panel:#ffffff; --ink:#18232a; --muted:#5b6b73; --line:#dce3e6; --soft:#e9eef0;
@@ -27,21 +27,22 @@
   --g0:#9aa7ad; --g1:#5cc26c; --g2:#6ea8f0; --g3:#b38cf0; --g4:#f0954d; --g5:#f0706a;
 }
 *{box-sizing:border-box}
+html{scrollbar-gutter:stable}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:14px;line-height:1.45;padding-inline:16px;padding-block:20px 48px}
-.wrap{max-width:1280px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+body>.wrap{max-width:1280px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
 header{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 24px}
 h1{font-family:var(--display);font-weight:700;font-size:30px;letter-spacing:.01em;margin:0;text-wrap:balance}
 h1 span{color:var(--accent)}
 .sub{color:var(--muted);margin:0;max-width:70ch}
 .stats{display:flex;gap:18px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;color:var(--muted)}
 .stats b{color:var(--ink);font-weight:500}
-nav.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line)}
-nav.tabs button{font-family:var(--display);font-size:17px;font-weight:500;letter-spacing:.02em;background:none;border:0;border-bottom:3px solid transparent;color:var(--muted);padding:8px 14px 6px;cursor:pointer}
+nav.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+nav.tabs button{font-family:var(--display);font-size:17px;font-weight:500;letter-spacing:.02em;background:none;border:0;border-bottom:3px solid transparent;color:var(--muted);padding:8px 14px 6px;cursor:pointer;white-space:nowrap;flex:none}
 nav.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
 nav.tabs button:focus-visible,.chip:focus-visible,.btn:focus-visible,th button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:10px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;border-bottom:1px solid var(--line)}
 input[type=search],select,input[type=number]{font:inherit;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:7px 10px;min-width:0}
-input[type=search]{flex:1 1 220px}
+input[type=search]{flex:1 1 220px;max-width:420px}
 input[type=number]{width:96px}
 label.f{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
 .btn{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:6px;padding:7px 12px;cursor:pointer}
@@ -49,11 +50,12 @@ label.f{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:12p
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .chip{font:inherit;font-size:12.5px;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:999px;padding:4px 11px;cursor:pointer}
 .chip[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--ink)}
-.count{font-family:var(--mono);font-size:12px;color:var(--muted);margin-left:auto}
+.count{font-family:var(--mono);font-size:12px;color:var(--muted);margin-left:auto;min-width:16ch;text-align:right}
 .tablebox{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:8px}
-table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
-th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top;white-space:nowrap}
-td.wrap{white-space:normal;min-width:220px}
+table{border-collapse:collapse;width:100%;min-width:1180px;table-layout:fixed;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top;overflow-wrap:break-word}
+td.id,td.num,.num,.id{white-space:nowrap}
+th{overflow-wrap:normal}
 th{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:600;background:var(--soft);position:sticky;top:0}
 th button{all:unset;cursor:pointer}
 th button[data-dir]::after{content:attr(data-dir);margin-left:4px;color:var(--accent)}
@@ -77,13 +79,17 @@ tbody tr:hover{background:var(--soft)}
 .bon dd{margin:0}
 details summary{cursor:pointer;color:var(--muted);font-size:12.5px}
 details ul{margin:6px 0 0;padding-left:18px;font-size:12.5px;columns:2 160px;column-gap:16px}
-td.req{min-width:230px;font-size:12.5px;font-family:var(--mono)}
-td.eff{min-width:260px;max-width:420px;font-size:13px}
+td.req{font-size:12.5px;font-family:var(--mono)}
+td.eff{font-size:13px}
 .cost{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:2px}
 .desc{font-size:12px;color:var(--muted);font-style:italic;margin-top:4px}
 .empty{padding:28px;text-align:center;color:var(--muted)}
+html:not(.ready) body>.wrap{visibility:hidden}
+html:not(.ready) body::after{content:"Loading data\2026";position:fixed;inset:0;display:grid;place-items:center;color:var(--muted);font-family:var(--body);font-size:14px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
+<script>addEventListener("load",()=>document.documentElement.classList.add("ready"))</script>
+<noscript><style>html:not(.ready) body>.wrap{visibility:visible}html:not(.ready) body::after{content:none}</style></noscript>
 
 <div class="wrap">
   <header>
@@ -113,7 +119,7 @@ td.eff{min-width:260px;max-width:420px;font-size:13px}
       <button class="btn" id="eq-reset" type="button">Reset</button>
       <span class="count" id="eq-count"></span>
     </div>
-    <div class="tablebox"><table>
+    <div class="tablebox"><table><colgroup><col style="width:72px"><col style="width:340px"><col style="width:130px"><col style="width:140px"><col style="width:60px"><col style="width:200px"><col style="width:136px"><col style="width:102px"></colgroup>
       <thead><tr>
         <th><button data-k="0">ID</button></th><th><button data-k="2">Item</button></th><th><button data-k="4">Slot</button></th>
         <th>Classes</th><th><button data-k="7">Req Lv</button></th><th><button data-k="11">Attack</button></th>
@@ -133,7 +139,7 @@ td.eff{min-width:260px;max-width:420px;font-size:13px}
       <span class="count" id="sk-count"></span>
       <div class="chips" id="sk-cls" style="flex-basis:100%"></div>
     </div>
-    <div class="tablebox"><table>
+    <div class="tablebox"><table><colgroup><col style="width:60px"><col style="width:180px"><col style="width:76px"><col style="width:144px"><col style="width:72px"><col style="width:220px"><col style="width:200px"><col style="width:228px"></colgroup>
       <thead><tr><th>ID</th><th>Skill</th><th title="Page of the in-game skill window">Page</th><th>Type</th><th>Levels</th><th>Requirements (Lv 1 → max)</th><th>Effect at Lv 1</th><th>Effect at max level</th></tr></thead>
       <tbody id="sk-body"></tbody>
     </table></div>
@@ -154,7 +160,7 @@ td.eff{min-width:260px;max-width:420px;font-size:13px}
       <select id="qs-sch" aria-label="School"><option value="">All schools</option><option>Sacred Gate</option><option>Mystic Peak</option><option>Phoenix</option></select>
       <span class="count" id="qs-count"></span>
     </div>
-    <div class="tablebox"><table>
+    <div class="tablebox"><table><colgroup><col style="width:210px"><col style="width:64px"><col style="width:64px"><col style="width:96px"><col style="width:96px"><col style="width:60px"><col style="width:180px"><col style="width:100px"><col style="width:310px"></colgroup>
       <thead><tr><th><button data-k="0">Quest</button></th><th><button data-k="2">Stat pts</button></th><th><button data-k="1">Skill pts</button></th><th><button data-k="3">EXP</button></th><th><button data-k="4">Gold</button></th><th>Items</th><th>Start from</th><th>School</th><th>Description</th></tr></thead>
       <tbody id="qs-body"></tbody>
     </table></div>
@@ -172,7 +178,7 @@ td.eff{min-width:260px;max-width:420px;font-size:13px}
       <span class="count" id="sg-count"></span>
     </div>
     <p class="note" style="margin-top:10px">Stats from gear count toward the stat requirements of other gear: the game checks base + level growth + your points + <b>all worn gear</b> + active buffs. Weapons also accept each stat up to <b>15 short</b>. An item's own bonus doesn't count while you put it on, so equip stat gear first, then the item that needs it. Once worn, gear is only re-checked when you switch character slot. INT is ignored by requirements.</p>
-    <div class="tablebox"><table>
+    <div class="tablebox"><table><colgroup><col style="width:320px"><col style="width:130px"><col style="width:160px"><col style="width:60px"><col style="width:160px"><col style="width:190px"><col style="width:160px"></colgroup>
       <thead><tr><th>Item</th><th>Slot</th><th>Classes</th><th>Req Lv</th><th>Gives</th><th>Random roll can give</th><th>Needs</th></tr></thead>
       <tbody id="sg-body"></tbody>
     </table></div>
@@ -322,6 +328,7 @@ document.querySelectorAll("#view-quests th button").forEach(b=>b.addEventListene
 /* initial working state: top tier weapons */
 $("eq-slot").value="Weapon";$("eq-grade").value="EL";$("eq-min").value=260;eqSort={k:11,dir:-1};
 eqFilter();skRender();stRender();qsRender();show(start);
+document.documentElement.classList.add("ready");
 </script>
 
 </html>
