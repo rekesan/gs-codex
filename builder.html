@@ -208,7 +208,7 @@ const CL={};D.classes.forEach(c=>CL[c.idx]=c);
 const SETS={};D.sets.forEach(s=>SETS[s[0]]=s);
 const ic=i=>(i==null||i<0)?`<span class="ic none" aria-hidden="true"></span>`:`<span class="ic" aria-hidden="true" style="background-position:-${(i%64)*28}px -${Math.floor(i/64)*28}px"></span>`;
 const ITEM={};D.items.forEach(it=>ITEM[it[0]]=it);
-const BYSLOT=Array.from({length:12},()=>[]);D.items.forEach(it=>BYSLOT[it[3]].push(it));
+const BYSLOT=Array.from({length:12},()=>[]);D.items.forEach(it=>{if(!/\bGM\b/.test(it[1]))BYSLOT[it[3]].push(it)});
 BYSLOT.forEach(a=>a.sort((x,y)=>y[6]-x[6]||y[2]-x[2]||x[1].localeCompare(y[1])));
 
 /* ---------- state ---------- */
